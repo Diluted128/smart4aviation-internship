@@ -1,1 +1,46 @@
-# smart4viation-internship
+## smart4viation-internship ✈️
+
+To generate input data concerning fligts and their cargo I used code below. JSON generator is available [here](https://json-generator.com/)
+
+**Flight**
+```
+[
+ '{{repeat(1000)}}',
+ {
+ flightId: '{{index() + 1}}',
+ flightNumber: '{{integer(1000, 9999)}}',
+ departureAirportIATACode: '{{random("SEA","YYZ","YYT","ANC","LAX", "MIT","LEW","GDN","KRK","PPX")}}',
+ arrivalAirportIATACode: '{{random("SEA","YYZ","YYT","ANC","LAX","MIT","LEW","GDN","KRK","PPX")}}',
+ departureDate: '{{date(new Date(2022, 4, 0), new Date(2022, 4, 20), "YYYY-MM-ddThh:mm:ssZ")}}'
+ }
+]
+```
+
+**Cargo**
+```
+[
+ '{{repeat(10000)}}',
+ {
+ flightId: '{{index() + 1}}',
+ baggage: [
+ '{{repeat(3,8)}}',
+ {
+ id: '{{index()}}',
+ weight: '{{integer(1, 999)}}',
+ weightUnit: '{{random("kg","lb")}}',
+ pieces: '{{integer(1, 999)}}'
+ }
+ ],
+ cargo: [
+ '{{repeat(3,5)}}',
+ {
+ id: '{{index()}}',
+ weight: '{{integer(1, 999)}}',
+ weightUnit: '{{random("kg","lb")}}',
+ pieces: '{{integer(1, 999)}}'
+ }
+ ]
+ }
+]
+```
+Amount of generated entities has been increased. Departure date was limit to 0-20 day of May to check statistic generation about all flights and baggages in specyfic airport. After generation there would be often flights with the same arrival and departure airports codes. Before saving flights to db they should be appropriately filltred.  
