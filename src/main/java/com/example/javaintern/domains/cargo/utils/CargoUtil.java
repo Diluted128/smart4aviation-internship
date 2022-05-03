@@ -1,6 +1,7 @@
 package com.example.javaintern.domains.cargo.utils;
 
 import com.example.javaintern.domains.flight.Flight;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.sun.istack.NotNull;
 import lombok.*;
 
@@ -11,8 +12,11 @@ import javax.persistence.*;
 @NoArgsConstructor
 @ToString
 @MappedSuperclass
-abstract class CargoUtil {
+public abstract class CargoUtil {
+
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @JsonIgnore
     private int id;
 
     @NotNull
