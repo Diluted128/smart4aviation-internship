@@ -2,15 +2,15 @@ package com.example.javaintern.domains.flight;
 
 import com.example.javaintern.domains.cargo.subdomains.baggage.Baggage;
 import com.example.javaintern.domains.cargo.subdomains.airplaneCargo.AirplaneCargo;
-import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.sun.istack.NotNull;
 import lombok.*;
 
 import javax.persistence.*;
-import java.time.LocalDateTime;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
 import java.time.OffsetDateTime;
-import java.util.Date;
 import java.util.Set;
 
 @Getter
@@ -24,12 +24,15 @@ public class Flight {
     private int flightId;
 
     @NotNull
+    @Min(value = 1, message = "Flight number must be greater then zero.")
     private int flightNumber;
 
-    @NotNull
+    @NotBlank(message = "Arrival code shouldn't be blank.")
+    @Pattern(regexp = "[A-Z]{3}", message = "Departure code must contain only three capital letters.")
     private String departureAirportIATACode;
 
-    @NotNull
+    @NotBlank(message = "Arrival code shouldn't be blank.")
+    @Pattern(regexp = "[A-Z]{3}", message = "Arrival code must contain only three capital letters.")
     private String arrivalAirportIATACode;
 
     private OffsetDateTime departureDate;
@@ -45,12 +48,10 @@ public class Flight {
             cascade = CascadeType.ALL)
     private Set<Baggage> baggages;
 
-    public Flight(int flightNumber, String departureAirportIATACode, String arrivalAirportIATACode, OffsetDateTime departureDate, Set<AirplaneCargo> airplaneCargos, Set<Baggage> baggages) {
+    public Flight(int flightNumber, String departureAirportIATACode, String arrivalAirportIATACode, OffsetDateTime departureDate) {
         this.flightNumber = flightNumber;
         this.departureAirportIATACode = departureAirportIATACode;
         this.arrivalAirportIATACode = arrivalAirportIATACode;
         this.departureDate = departureDate;
-        this.airplaneCargos = airplaneCargos;
-        this.baggages = baggages;
     }
 }
