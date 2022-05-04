@@ -8,7 +8,7 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 public class WeightSummary {
-    private int baggageWeight;
-    private int cargoWeight;
-    private int totalWeight;
+    private double baggageWeightKG;
+    private double cargoWeightKG;
+    private double totalWeightKG;
 }
