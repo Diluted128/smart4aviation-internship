@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.validation.ConstraintViolation;
 import javax.validation.ConstraintViolationException;
+import java.time.DateTimeException;
 import java.util.List;
 import java.util.NoSuchElementException;
 
@@ -19,6 +20,12 @@ public class ExceptionAdvice {
     @ResponseBody
     @ExceptionHandler(NoSuchElementException.class)
     public ResponseEntity<String> EntityNotFoundHandler(NoSuchElementException ex){
+        return new ResponseEntity<>(ex.getMessage(), HttpStatus.BAD_REQUEST);
+    }
+
+    @ResponseBody
+    @ExceptionHandler(DateTimeException.class)
+    public ResponseEntity<String> EntityNotFoundHandler(DateTimeException ex){
         return new ResponseEntity<>(ex.getMessage(), HttpStatus.BAD_REQUEST);
     }
 
