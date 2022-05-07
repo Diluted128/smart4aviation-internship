@@ -1,7 +1,6 @@
 package com.example.javaintern.domains.cargo.subdomains.airplaneCargo;
 
 import com.example.javaintern.domains.cargo.utils.CargoUtil;
-import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.Entity;

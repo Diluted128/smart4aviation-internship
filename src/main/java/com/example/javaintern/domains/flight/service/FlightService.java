@@ -1,9 +1,5 @@
 package com.example.javaintern.domains.flight.service;
 
-import com.example.javaintern.domains.cargo.subdomains.airplaneCargo.AirplaneCargo;
-import com.example.javaintern.domains.cargo.subdomains.airplaneCargo.AirplaneCargoRepo;
-import com.example.javaintern.domains.cargo.subdomains.baggage.Baggage;
-import com.example.javaintern.domains.cargo.subdomains.baggage.BaggageRepo;
 import com.example.javaintern.domains.cargo.utils.CargoUtil;
 import com.example.javaintern.domains.flight.Flight;
 import com.example.javaintern.domains.flight.controller.util.AirportSummary;
@@ -15,8 +11,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
-import java.text.DecimalFormat;
-import java.text.NumberFormat;
+import java.time.LocalDate;
 import java.time.OffsetDateTime;
 import java.util.List;
 import java.util.NoSuchElementException;
@@ -27,14 +22,10 @@ import java.util.stream.Collectors;
 public class FlightService {
 
     private final FlightRepository flightRepository;
-    private final BaggageRepo baggageRepo;
-    private final AirplaneCargoRepo airplaneCargoRepo;
 
     @Autowired
-    public FlightService(FlightRepository flightRepository, BaggageRepo baggageRepo, AirplaneCargoRepo airplaneCargoRepo) {
+    public FlightService(FlightRepository flightRepository) {
         this.flightRepository = flightRepository;
-        this.baggageRepo = baggageRepo;
-        this.airplaneCargoRepo = airplaneCargoRepo;
     }
 
     public ResponseEntity<String> saveFlights(List<Flight> flights){
@@ -61,14 +52,11 @@ public class FlightService {
             throw new NoSuchElementException("Provided date doesn't match with desirable flight.");
         }
 
-        Set<Baggage> baggage = baggageRepo.getBaggageByFlight(requestedFlight);
-        Set<AirplaneCargo> airplaneCargos = airplaneCargoRepo.getAirplaneCargoByFlight(requestedFlight);
-
-        double baggageWeight = baggage.stream()
+        double baggageWeight = requestedFlight.getBaggages().stream()
                 .map(element -> element.getWeightUnit().equals("kg") ? element.getWeight() : element.getWeight()/2.2046)
                 .reduce(0.0, Double::sum);
 
-        double airplaneCargoWeight = airplaneCargos.stream()
+        double airplaneCargoWeight = requestedFlight.getAirplaneCargos().stream()
                 .map(element -> element.getWeightUnit().equals("kg") ? element.getWeight() : element.getWeight()/2.2046)
                 .reduce(0.0, Double::sum);
 
@@ -83,7 +71,7 @@ public class FlightService {
                                                         () ->  new NoSuchElementException("There aren't any flights with IATA: " + IATA)
                                                 );
 
-        OffsetDateTime requestedDate = OffsetDateTimeFormatter.parse(date);
+        LocalDate requestedDate = LocalDate.parse(date);
 
         Set<Flight> flightsOnAGivenDate = flights.stream().filter(element ->
             element.getDepartureDate().getYear() == requestedDate.getYear() &&

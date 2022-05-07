@@ -2,6 +2,7 @@ package com.example.javaintern.domains.flight.service.util;
 
 import org.springframework.stereotype.Component;
 
+import java.time.DateTimeException;
 import java.time.OffsetDateTime;
 import java.time.ZoneOffset;
 
@@ -17,7 +18,7 @@ public class OffsetDateTimeFormatter {
                                       .withOffsetSameInstant(ZoneOffset.of(offset));
         }
         catch (Exception e){
-            throw new RuntimeException("zla data");
+            throw new DateTimeException("Date format is invalid");
         }
         return offsetDateTime;
     }

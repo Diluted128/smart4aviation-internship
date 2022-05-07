@@ -6,7 +6,6 @@ import com.example.javaintern.domains.cargo.utils.TotalCargo;
 import com.example.javaintern.domains.flight.Flight;
 import com.example.javaintern.domains.flight.repository.FlightRepository;
 import com.example.javaintern.domains.flight.service.util.OffsetDateTimeFormatter;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -15,7 +14,6 @@ import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.http.ResponseEntity;
 
-import javax.persistence.EntityNotFoundException;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Optional;
@@ -75,7 +73,7 @@ class CargoServiceTest {
                 Set.of()
         );
 
-        String expectedMessage = "Flight with id: " + totalCargo.getFlightId() + "hasn't been found";
+        String expectedMessage = "Flight with id: " + totalCargo.getFlightId() + " hasn't been found";
 
         NoSuchElementException exception = assertThrows(NoSuchElementException.class, () -> {
             cargoService.saveALlCargos(List.of(totalCargo));
