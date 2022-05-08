@@ -1,6 +1,14 @@
 ## smart4viation-internship ✈️
 
-To generate input data concerning fligts and their cargo I used code below. JSON generator is available [here](https://json-generator.com/)
+## Run
+To run the app use the command below in the root directory of pulled repository:
+```
+docker-compose up
+```
+After putting some changes to the project just use the same command. The .jar file will be generated automatically.
+
+## Input data
+To generate input data concerning fligts and their cargo use code below. JSON generator is available [here](https://json-generator.com/)<br/>
 
 **Flight**
 ```
