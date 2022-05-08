@@ -7,6 +7,23 @@ docker-compose up
 ```
 After putting some changes to the project just use the same command. The .jar file will be generated automatically.
 
+## API
+```
+/flight               POST
+```
+Saves generated flights placed in request body.
+```
+/cargo               POST
+```
+Assigns generated cargos to provided flights.
+```
+/flight/{flightNumber}/weight?date={dateUTC}               GET
+```
+Return weight summary about the specified flight.
+```
+/flight/airport/{IATA}?date={date[YYYY-MM-DD]}               GET 
+```
+Returns airport summary about the specified airport.
 ## Input data
 To generate input data concerning fligts and their cargo use code below. JSON generator is available [here](https://json-generator.com/)<br/>
 
@@ -52,3 +69,4 @@ To generate input data concerning fligts and their cargo use code below. JSON ge
 ]
 ```
 Amount of generated entities has been increased. Departure date was limit to 0-20 day of May to check statistic generation about all flights and baggages in specyfic airport. After generation there would be often flights with the same arrival and departure airports codes. Before saving flights to db they should be appropriately filltred.  
+
