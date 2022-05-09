@@ -5,8 +5,10 @@ To run the app use the command below in the root directory of pulled repository:
 ```
 docker-compose up
 ```
-After putting some changes to the project just use the same command. The .jar file will be generated automatically.
-
+After putting some changes to the project just use this command to build .jar file.
+```
+gradle build
+```
 ## API
 ```
 /flight               POST
